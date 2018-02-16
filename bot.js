@@ -51,7 +51,8 @@ function scrape(username, mode, queue, channel) {
 
 	var Nightmare1 = require('nightmare');
 		nightmare = Nightmare1({
-			show: true
+			show: true,
+			waitTimeout: 3000 // in ms
 		});
 
 	if(mode == 'fpp') {
