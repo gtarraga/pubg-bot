@@ -110,10 +110,10 @@ client.on('message', msg => {
 	}
 
 
-	//!add Miisc fpp squad
+	//!add Miisc fpp squad, defaults to fpp and squad if left empty
 	if (command === 'add' && msg.channel == mainChannel) {
 		var username = args[0];
-		var mode = args[1];
+		var mode;
 		var queue;
 
 		switch (args[2]) {
@@ -125,6 +125,13 @@ client.on('message', msg => {
 				break;
 			default:
 				queue = 3;
+		}
+		switch (args[1]) {
+			case 'tpp':
+				mode = 'tpp'
+				break;
+			default:
+				mode = 'fpp';
 		}
 		var channel = msg.channel;
 		scrape(username, mode, queue, channel);
