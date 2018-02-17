@@ -52,7 +52,15 @@ client.on('ready', () => {
 		setupEnabled = true;
 		console.log('role1k needs setup');
 	}
-	else console.log('already setup');
+
+	if(!setupEnabled) {
+		mainChannel.fetchPinnedMessages()
+			.then(message => {
+				mainMessage = message.first();
+				console.log('already setup');
+			})
+			.catch(console.error());
+	}
 });
 
 const prefix = "!";
@@ -106,7 +114,17 @@ client.on('message', msg => {
 			.catch(console.error());
 
 		msg.guild.createChannel('set-rank', 'text')
-			.then(channel => console.log('Created new channel pug-test'))
+			.then(channel => {
+				console.log('Created new channel pug-test');
+				channel.send('**Instructions here**')
+					.then(message => {
+						mainMessage = message;
+						message.pin()
+							.then(console.log('pinned main message'))
+							.catch(console.error());
+					})
+					.catch(console.error());
+			})
 			.catch(console.error());
 
 	}
