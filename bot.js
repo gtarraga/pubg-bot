@@ -60,6 +60,9 @@ var rank;
 
 client.on('message', msg => {
 	if (!msg.content.startsWith(prefix)) return;
+	else {
+		console.log('\n\nContent:\n' + msg.content + '\n');
+	}
 
 	const args = msg.content.slice(prefix.length).trim().split(/ +/g);
 	const command = args.shift().toLowerCase();
@@ -112,7 +115,7 @@ client.on('message', msg => {
 	//!add Miisc fpp squad, defaults to fpp and squad if left empty
 	if (command === 'add' && msg.channel == mainChannel) {
 		var username = args[0];
-		var mode;
+		var mode = args[1];
 		var queue;
 
 		switch (args[2]) {
@@ -125,13 +128,7 @@ client.on('message', msg => {
 			default:
 				queue = 3;
 		}
-		switch (args[1]) {
-			case 'tpp':
-				mode = 'tpp'
-				break;
-			default:
-				mode = 'fpp';
-		}
+
 		var channel = msg.channel;
 
 		scrape(username, mode, queue, channel, msg.member);
@@ -148,77 +145,49 @@ client.on('message', msg => {
 
 function scrape(username, mode, queue, channel, member) {
 
+	switch (mode) {
+		case 'tpp':
+			mode = 'tpp';
+			var child = 1;
+			break;
+		default:
+			mode = 'fpp';
+			var child = 5;
+	}
+
 	var Nightmare1 = require('nightmare');
 		nightmare = Nightmare1({
 			show: true,
 			waitTimeout: 3000 // in ms
 		});
 
-	if(mode == 'fpp') {
 		nightmare
-		  	.goto('https://pubg.op.gg/user/' + username)
-		  	.click('#rankedStatsChkMode')
-		  	.wait('#rankedStatsWrap > div.ranked-stats-wrapper__list > div:nth-child(5) > div > div:nth-child('+ queue +') > div > div > div.ranked-stats')
-		  	.evaluate(function() {
-		    	return document.querySelector('body')
-		      	.innerHTML;
-		  	})
-		  	.end()
-		  	.then(function(page) {
-		    	fs.writeFile('page.html', page, function(err) {
-		      		if (err) return console.log(err);
-		      		console.log('fuck this scraping shit');
-					var $ = cheerio.load(fs.readFileSync('./page.html'));
+		.goto('https://pubg.op.gg/user/' + username)
+		.click('#rankedStatsChkMode')
+		.wait('#rankedStatsWrap > div.ranked-stats-wrapper__list > div:nth-child(' + child + ') > div > div:nth-child('+ queue +') > div > div > div.ranked-stats')
+		.evaluate(function() {
+			return document.querySelector('body')
+			.innerHTML;
+		})
+		.end()
+		.then(function(page) {
+			fs.writeFile('page.html', page, function(err) {
+				if (err) return console.log(err);
 
+				var $ = cheerio.load(fs.readFileSync('./page.html'));
+				rank = $('#rankedStatsWrap > div.ranked-stats-wrapper__list > div:nth-child(5) > div > div:nth-child(' + queue + ') > div > div > div > div > div.ranked-stats__layout.ranked-stats__layout--rank > div > div > div.ranked-stats__rank').text().replace(/,/g, '').replace(/#/g, '');
 
-					rank = $('#rankedStatsWrap > div.ranked-stats-wrapper__list > div:nth-child(5) > div > div:nth-child(' + queue + ') > div > div > div > div > div.ranked-stats__layout.ranked-stats__layout--rank > div > div > div.ranked-stats__rank').text().replace(/,/g, '').replace(/#/g, '');
-					console.log(rank);
+				console.log(username + ' ' + mode + ' ' + queue + ' rank ' + rank);
+				channel.send(username + ' ' + mode + ' ' + queue + ' rank ' + rank);
 
-					console.log(username + ' ' + mode + ' ' + queue + ' rank ' + rank);
-					channel.send(username + ' ' + mode + ' ' + queue + ' rank ' + rank);
+				rank = parseInt(rank);
+				if(rank <= 10) member.addRole(role10);
+				else if(rank <= 50) member.addRole(role50);
+				else if(rank <= 100) member.addRole(role100);
+				else if(rank <= 500) member.addRole(role500);
+				else if(rank <= 10000000) member.addRole(role1k);
+				else console.log('git gud');
 
-					console.log(parseInt(rank));
-
-					rank = parseInt(rank);
-					if(rank <= 10) member.addRole(role10);
-					else if(rank <= 50) member.addRole(role50);
-					else if(rank <= 100) member.addRole(role100);
-					else if(rank <= 500) member.addRole(role500);
-					else if(rank <= 10000000) member.addRole(role1k);
-					else console.log('git gud');
-
-				});
-		  	})
-	}
-	else if(mode == 'tpp') {
-		nightmare
-		  	.goto('https://pubg.op.gg/user/' + username)
-		  	.click('#rankedStatsChkMode')
-		  	.wait('#rankedStatsWrap > div.ranked-stats-wrapper__list > div:nth-child(1) > div > div:nth-child('+ queue +') > div > div > div.ranked-stats')
-		  	.evaluate(function() {
-		    	return document.querySelector('body')
-		      	.innerHTML;
-		  	})
-		  	.end()
-		  	.then(function(page) {
-		    	fs.writeFile('page.html', page, function(err) {
-		      		if (err) return console.log(err);
-		      		console.log('fuck this scraping shit');
-					var $ = cheerio.load(fs.readFileSync('./page.html'));
-
-
-					rank = $('#rankedStatsWrap > div.ranked-stats-wrapper__list > div:nth-child(1) > div > div:nth-child(' + queue + ') > div > div > div > div > div.ranked-stats__layout.ranked-stats__layout--rank > div > div > div.ranked-stats__rank').text().replace(/,/g, '').replace(/#/g, '');
-
-					console.log(username + ' ' + mode + ' ' + queue + ' rank ' + rank);
-
-					rank = parseInt(rank);
-					if(rank <= 10) member.addRole(role10);
-					else if(rank <= 50) member.addRole(role50);
-					else if(rank <= 100) member.addRole(role100);
-					else if(rank <= 500) member.addRole(role500);
-					else if(rank <= 1000) member.addRole(role1k);
-					else console.log('git gud');
-		    	});
-		  	})
-	}
+			});
+	})
 }
