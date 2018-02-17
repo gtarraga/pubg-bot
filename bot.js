@@ -59,7 +59,6 @@ const prefix = "!";
 var rank;
 
 client.on('message', msg => {
-	console.log('hello');
 	if (!msg.content.startsWith(prefix)) return;
 
 	const args = msg.content.slice(prefix.length).trim().split(/ +/g);
@@ -134,13 +133,20 @@ client.on('message', msg => {
 				mode = 'fpp';
 		}
 		var channel = msg.channel;
-		scrape(username, mode, queue, channel);
+
+		scrape(username, mode, queue, channel, msg.member);
+
+		// addRankRole(msg.member, parseInt(scrape(username, mode, queue, channel)));
+
+
+
+
 	}
 
 });
 
 
-function scrape(username, mode, queue, channel) {
+function scrape(username, mode, queue, channel, member) {
 
 	var Nightmare1 = require('nightmare');
 		nightmare = Nightmare1({
@@ -165,11 +171,23 @@ function scrape(username, mode, queue, channel) {
 					var $ = cheerio.load(fs.readFileSync('./page.html'));
 
 
-					rank = $('#rankedStatsWrap > div.ranked-stats-wrapper__list > div:nth-child(5) > div > div:nth-child(' + queue + ') > div > div > div > div > div.ranked-stats__layout.ranked-stats__layout--rank > div > div > div.ranked-stats__rank').html();
+					rank = $('#rankedStatsWrap > div.ranked-stats-wrapper__list > div:nth-child(5) > div > div:nth-child(' + queue + ') > div > div > div > div > div.ranked-stats__layout.ranked-stats__layout--rank > div > div > div.ranked-stats__rank').text().replace(/,/g, '').replace(/#/g, '');
+					console.log(rank);
 
 					console.log(username + ' ' + mode + ' ' + queue + ' rank ' + rank);
-					return channel.send(username + ' ' + mode + ' ' + queue + ' rank ' + rank);
-		    	});
+					channel.send(username + ' ' + mode + ' ' + queue + ' rank ' + rank);
+
+					console.log(parseInt(rank));
+
+					rank = parseInt(rank);
+					if(rank <= 10) member.addRole(role10);
+					else if(rank <= 50) member.addRole(role50);
+					else if(rank <= 100) member.addRole(role100);
+					else if(rank <= 500) member.addRole(role500);
+					else if(rank <= 10000000) member.addRole(role1k);
+					else console.log('git gud');
+
+				});
 		  	})
 	}
 	else if(mode == 'tpp') {
@@ -189,10 +207,17 @@ function scrape(username, mode, queue, channel) {
 					var $ = cheerio.load(fs.readFileSync('./page.html'));
 
 
-					rank = $('#rankedStatsWrap > div.ranked-stats-wrapper__list > div:nth-child(1) > div > div:nth-child(' + queue + ') > div > div > div > div > div.ranked-stats__layout.ranked-stats__layout--rank > div > div > div.ranked-stats__rank').html();
+					rank = $('#rankedStatsWrap > div.ranked-stats-wrapper__list > div:nth-child(1) > div > div:nth-child(' + queue + ') > div > div > div > div > div.ranked-stats__layout.ranked-stats__layout--rank > div > div > div.ranked-stats__rank').text().replace(/,/g, '').replace(/#/g, '');
 
 					console.log(username + ' ' + mode + ' ' + queue + ' rank ' + rank);
-					return channel.send(username + ' ' + mode + ' ' + queue + ' rank ' + rank);
+
+					rank = parseInt(rank);
+					if(rank <= 10) member.addRole(role10);
+					else if(rank <= 50) member.addRole(role50);
+					else if(rank <= 100) member.addRole(role100);
+					else if(rank <= 500) member.addRole(role500);
+					else if(rank <= 1000) member.addRole(role1k);
+					else console.log('git gud');
 		    	});
 		  	})
 	}
