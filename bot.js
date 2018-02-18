@@ -53,21 +53,14 @@ client.on('ready', () => {
 		console.log('role1k needs setup');
 	}
 
-	if(!setupEnabled) {
-		mainChannel.fetchPinnedMessages()
-			.then(message => {
-				mainMessage = message.first();
-				console.log('already setup');
-			})
-			.catch(console.error());
-	}
+	if(!setupEnabled) console.log('already setup');
 });
 
 const prefix = "!";
 var rank;
 
 client.on('message', msg => {
-	if (!msg.content.startsWith(prefix)) return;
+	if (!msg.content.startsWith(prefix)) return msg.delete();
 	else {
 		console.log('\n\nContent:\n' + msg.content + '\n');
 	}
@@ -116,14 +109,6 @@ client.on('message', msg => {
 		msg.guild.createChannel('set-rank', 'text')
 			.then(channel => {
 				console.log('Created new channel pug-test');
-				channel.send('**Instructions here**')
-					.then(message => {
-						mainMessage = message;
-						message.pin()
-							.then(console.log('pinned main message'))
-							.catch(console.error());
-					})
-					.catch(console.error());
 			})
 			.catch(console.error());
 
@@ -158,6 +143,7 @@ client.on('message', msg => {
 
 	}
 
+	msg.delete();
 });
 
 
