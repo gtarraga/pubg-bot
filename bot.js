@@ -60,17 +60,12 @@ const prefix = "!";
 var rank;
 
 client.on('message', msg => {
-	if (!msg.content.startsWith(prefix)) return msg.delete();
-	else {
-		console.log('\n\nContent:\n' + msg.content + '\n');
-	}
 
 	const args = msg.content.slice(prefix.length).trim().split(/ +/g);
 	const command = args.shift().toLowerCase();
 
 	//Sets up all roles and the command channel
 	if((command === 'setup') && setupEnabled) {
-
 		msg.guild.createRole({
 			name: 'Top 10',
 			color: '#42e2f4',
@@ -111,43 +106,38 @@ client.on('message', msg => {
 				console.log('Created new channel pug-test');
 			})
 			.catch(console.error());
-
 	}
 
+	if(msg.channel == mainChannel) {
 
-	//!add Miisc fpp squad, defaults to fpp and squad if left empty
-	if (command === 'add' && msg.channel == mainChannel) {
-		var username = args[0];
-		var mode = args[1];
-		var queue;
+		//Deletes anything that doesn't start with a prefix and logs the others
+		if (!msg.content.startsWith(prefix)) return msg.delete();
+		else console.log('\n\nContent:\n' + msg.content + '\n');
 
-		switch (args[2]) {
-			case 'solo':
-				queue = 1;
-				break;
-			case 'duo':
-				queue = 2;
-				break;
-			default:
-				queue = 3;
+		//!add Miisc fpp squad, defaults to fpp and squad if left empty
+		if (command === 'add') {
+			var username = args[0];
+			var mode = args[1];
+			var queue;
+
+			switch (args[2]) {
+				case 'solo':
+					queue = 1;
+					break;
+				case 'duo':
+					queue = 2;
+					break;
+				default:
+					queue = 3;
+			}
+			scrape(username, mode, queue, msg.member);
 		}
-
-		var channel = msg.channel;
-
-		scrape(username, mode, queue, channel, msg.member);
-
-		// addRankRole(msg.member, parseInt(scrape(username, mode, queue, channel)));
-
-
-
-
+		msg.delete();
 	}
-
-	msg.delete();
 });
 
 
-function scrape(username, mode, queue, channel, member) {
+function scrape(username, mode, queue, member) {
 
 	switch (mode) {
 		case 'tpp':
@@ -182,7 +172,6 @@ function scrape(username, mode, queue, channel, member) {
 				rank = $('#rankedStatsWrap > div.ranked-stats-wrapper__list > div:nth-child(5) > div > div:nth-child(' + queue + ') > div > div > div > div > div.ranked-stats__layout.ranked-stats__layout--rank > div > div > div.ranked-stats__rank').text().replace(/,/g, '').replace(/#/g, '');
 
 				console.log(username + ' ' + mode + ' ' + queue + ' rank ' + rank);
-				channel.send(username + ' ' + mode + ' ' + queue + ' rank ' + rank);
 
 				rank = parseInt(rank);
 				if(rank <= 10) member.addRole(role10);
