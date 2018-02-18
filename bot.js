@@ -9,12 +9,31 @@ var request = require('request'),
 //Invite link test bot https://goo.gl/yLmkAG
 client.login(tokens.key);
 
-var mainChannel;
-var role10;
-var role50;
-var role100;
-var role500;
-var role1k;
+var mainChannel,
+	Trole1,
+	Trole10,
+	Trole50,
+	Trole100,
+	Trole500,
+	Trole1k,
+	Trole2k,
+	Trole5k,
+	Trole10k,
+	Trole25k,
+	Trole50k;
+
+var Frole1,
+	Frole10,
+	Frole50,
+	Frole100,
+	Frole500,
+	Frole1k,
+	Frole2k,
+	Frole5k,
+	Frole10k,
+	Frole25k,
+	Frole50k;
+
 var setupEnabled = false;
 
 
@@ -22,35 +41,37 @@ client.on('ready', () => {
 	console.log(`Logged in as ${client.user.tag}!`);
 	mainChannel = client.channels.find(n => n.name == "set-rank");
 	mainGuild = client.guilds.first();
-	role10 = mainGuild.roles.find("name", "Top 10");
-	role50 = mainGuild.roles.find("name", "Top 50");
-	role100 = mainGuild.roles.find("name", "Top 100");
-	role500 = mainGuild.roles.find("name", "Top 500");
-	role1k = mainGuild.roles.find("name", "Top 1000");
+	Trole1 = mainGuild.roles.find("name", "TPP Top 1");
+	Trole10 = mainGuild.roles.find("name", "TPP Top 10");
+	Trole50 = mainGuild.roles.find("name", "TPP Top 50");
+	Trole100 = mainGuild.roles.find("name", "TPP Top 100");
+	Trole500 = mainGuild.roles.find("name", "TPP Top 500");
+	Trole1k = mainGuild.roles.find("name", "TPP Top 1000");
+	Trole2k = mainGuild.roles.find("name", "TPP Top 2000");
+	Trole5k = mainGuild.roles.find("name", "TPP Top 5000");
+	Trole10k = mainGuild.roles.find("name", "TPP Top 10000");
+	Trole25k = mainGuild.roles.find("name", "TPP Top 25000");
+	Trole50k = mainGuild.roles.find("name", "TPP Top 50000");
+
+	Frole1 = mainGuild.roles.find("name", "FPP Top 1");
+	Frole10 = mainGuild.roles.find("name", "FPP Top 10");
+	Frole50 = mainGuild.roles.find("name", "FPP Top 50");
+	Frole100 = mainGuild.roles.find("name", "FPP Top 100");
+	Frole500 = mainGuild.roles.find("name", "FPP Top 500");
+	Frole1k = mainGuild.roles.find("name", "FPP Top 1000");
+	Frole2k = mainGuild.roles.find("name", "FPP Top 2000");
+	Frole5k = mainGuild.roles.find("name", "FPP Top 5000");
+	Frole10k = mainGuild.roles.find("name", "FPP Top 10000");
+	Frole25k = mainGuild.roles.find("name", "FPP Top 25000");
+	Frole50k = mainGuild.roles.find("name", "FPP Top 50000");
 
 	if(mainChannel == undefined) {
 		setupEnabled = true;
 		console.log('command channel needs setup');
 	}
-	if(role10 == undefined) {
+	if(Trole1 == undefined) {
 		setupEnabled = true;
-		console.log('role10 needs setup');
-	}
-	if(role50 == undefined) {
-		setupEnabled = true;
-		console.log('role50 needs setup');
-	}
-	if(role100 == undefined) {
-		setupEnabled = true;
-		console.log('role100 needs setup');
-	}
-	if(role500 == undefined) {
-		setupEnabled = true;
-		console.log('role500 needs setup');
-	}
-	if(role1k == undefined) {
-		setupEnabled = true;
-		console.log('role1k needs setup');
+		console.log('roles needs setup');
 	}
 
 	if(!setupEnabled) console.log('already setup');
@@ -72,39 +93,164 @@ client.on('message', msg => {
 	if((command === 'setup') && setupEnabled) {
 
 		msg.guild.createRole({
-			name: 'Top 10',
+			name: 'TPP Top 1',
 			color: '#42e2f4',
 		})
-			.then(channel => console.log('Created new role Top 10'))
+			.then(channel => console.log('Created new role TPP Top 1'))
 			.catch(console.error());
 
 		msg.guild.createRole({
-			name: 'Top 50',
+			name: 'TPP Top 10',
 			color: '#42e2f4',
 		})
-			.then(channel => console.log('Created new role Top 50'))
+			.then(channel => console.log('Created new role TPP Top 10'))
 			.catch(console.error());
 
 		msg.guild.createRole({
-			name: 'Top 100',
+			name: 'TPP Top 50',
 			color: '#42e2f4',
 		})
-			.then(channel => console.log('Created new role Top 100'))
+			.then(channel => console.log('Created new role TPP Top 50'))
 			.catch(console.error());
 
 		msg.guild.createRole({
-			name: 'Top 500',
+			name: 'TTP Top 100',
 			color: '#42e2f4',
 		})
-			.then(channel => console.log('Created new role Top 500'))
+			.then(channel => console.log('Created new role TPP Top 100'))
 			.catch(console.error());
 
 		msg.guild.createRole({
-			name: 'Top 1000',
+			name: 'TPP Top 500',
 			color: '#42e2f4',
 		})
-			.then(channel => console.log('Created new role Top 1000'))
+			.then(channel => console.log('Created new role TPP Top 500'))
 			.catch(console.error());
+
+		msg.guild.createRole({
+			name: 'TPP Top 1000',
+			color: '#42e2f4',
+		})
+			.then(channel => console.log('Created new role TPP Top 1k'))
+			.catch(console.error());
+
+		msg.guild.createRole({
+			name: 'TPP Top 2000',
+			color: '#42e2f4',
+		})
+			.then(channel => console.log('Created new role TPP Top 2k'))
+			.catch(console.error());
+
+		msg.guild.createRole({
+			name: 'TPP Top 5000',
+			color: '#42e2f4',
+		})
+			.then(channel => console.log('Created new role TPP Top 5k'))
+			.catch(console.error());
+
+		msg.guild.createRole({
+			name: 'TPP Top 10000',
+			color: '#42e2f4',
+		})
+			.then(channel => console.log('Created new role TPP Top 10k'))
+			.catch(console.error());
+
+		msg.guild.createRole({
+			name: 'TPP Top 25000',
+			color: '#42e2f4',
+		})
+			.then(channel => console.log('Created new role TPP Top 25k'))
+			.catch(console.error());
+
+		msg.guild.createRole({
+			name: 'TPP Top 50000',
+			color: '#42e2f4',
+		})
+			.then(channel => console.log('Created new role TPP Top 50k'))
+			.catch(console.error());
+
+
+
+		msg.guild.createRole({
+			name: 'FPP Top 1',
+			color: '#42e2f4',
+		})
+			.then(channel => console.log('Created new role FPP Top 1'))
+			.catch(console.error());
+
+		msg.guild.createRole({
+			name: 'FPP Top 10',
+			color: '#42e2f4',
+		})
+			.then(channel => console.log('Created new role FPP Top 10'))
+			.catch(console.error());
+
+		msg.guild.createRole({
+			name: 'FPP Top 50',
+			color: '#42e2f4',
+		})
+			.then(channel => console.log('Created new role FPP Top 50'))
+			.catch(console.error());
+
+		msg.guild.createRole({
+			name: 'TTP Top 100',
+			color: '#42e2f4',
+		})
+			.then(channel => console.log('Created new role FPP Top 100'))
+			.catch(console.error());
+
+		msg.guild.createRole({
+			name: 'FPP Top 500',
+			color: '#42e2f4',
+		})
+			.then(channel => console.log('Created new role FPP Top 500'))
+			.catch(console.error());
+
+		msg.guild.createRole({
+			name: 'FPP Top 1000',
+			color: '#42e2f4',
+		})
+			.then(channel => console.log('Created new role FPP Top 1k'))
+			.catch(console.error());
+
+		msg.guild.createRole({
+			name: 'FPP Top 2000',
+			color: '#42e2f4',
+		})
+			.then(channel => console.log('Created new role Top 2k'))
+			.catch(console.error());
+
+		msg.guild.createRole({
+			name: 'FPP Top 5000',
+			color: '#42e2f4',
+		})
+			.then(channel => console.log('Created new role FPP Top 5k'))
+			.catch(console.error());
+
+		msg.guild.createRole({
+			name: 'FPP Top 10000',
+			color: '#42e2f4',
+		})
+			.then(channel => console.log('Created new role FPP Top 10k'))
+			.catch(console.error());
+
+		msg.guild.createRole({
+			name: 'FPP Top 25000',
+			color: '#42e2f4',
+		})
+			.then(channel => console.log('Created new role FPP Top 25k'))
+			.catch(console.error());
+
+		msg.guild.createRole({
+			name: 'FPP Top 50000',
+			color: '#42e2f4',
+		})
+			.then(channel => console.log('Created new role FPP Top 50k'))
+			.catch(console.error());
+
+
+
+
 
 		msg.guild.createChannel('set-rank', 'text')
 			.then(channel => {
@@ -166,7 +312,7 @@ function scrape(username, mode, queue, channel, member) {
 		});
 
 		nightmare
-		.goto('https://pubg.op.gg/user/' + username)
+		.goto('htpps://pubg.op.gg/user/' + username)
 		.click('#rankedStatsChkMode')
 		.wait('#rankedStatsWrap > div.ranked-stats-wrapper__list > div:nth-child(' + child + ') > div > div:nth-child('+ queue +') > div > div > div.ranked-stats')
 		.evaluate(function() {
@@ -185,12 +331,36 @@ function scrape(username, mode, queue, channel, member) {
 				channel.send(username + ' ' + mode + ' ' + queue + ' rank ' + rank);
 
 				rank = parseInt(rank);
-				if(rank <= 10) member.addRole(role10);
-				else if(rank <= 50) member.addRole(role50);
-				else if(rank <= 100) member.addRole(role100);
-				else if(rank <= 500) member.addRole(role500);
-				else if(rank <= 10000000) member.addRole(role1k);
+
+			if(mode == 'fpp') {
+				if(rank = 1) member.addRole(Frole1);
+				else if(rank <= 10) member.addRole(Frole10);
+				else if(rank <= 50) member.addRole(Frole50);
+				else if(rank <= 100) member.addRole(Frole100);
+				else if(rank <= 500) member.addRole(Frole500);
+				else if(rank <= 1000) member.addRole(Frole1k);
+				else if(rank <= 2000) member.addRole(Frole2k);
+				else if(rank <= 5000) member.addRole(Frole5k);
+				else if(rank <= 10000) member.addRole(Frole10k);
+				else if(rank <= 25000) member.addRole(Frole25k);
+				else if(rank <= 50000) member.addRole(Frole50k);
 				else console.log('git gud');
+			}
+			if(mode == 'tpp') {
+				if(rank = 1) member.addRole(Trole1);
+				else if(rank <= 10) member.addRole(Trole10);
+				else if(rank <= 50) member.addRole(Trole50);
+				else if(rank <= 100) member.addRole(Trole100);
+				else if(rank <= 500) member.addRole(Trole500);
+				else if(rank <= 1000) member.addRole(Trole1k);
+				else if(rank <= 2000) member.addRole(Trole2k);
+				else if(rank <= 5000) member.addRole(Trole5k);
+				else if(rank <= 10000) member.addRole(Trole10k);
+				else if(rank <= 25000) member.addRole(Trole25k);
+				else if(rank <= 50000) member.addRole(Trole50k);
+				else console.log('git gud');
+			}
+
 
 			});
 	})
