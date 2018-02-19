@@ -42,7 +42,7 @@ var mainChannel,
 
 
 client.on('ready', () => {
-	client.user.setName('Budget Oddish');
+	client.user.setUsername('Budget Oddish');
 	console.log(`Logged in as ${client.user.tag}!`);
 	mainChannel = client.channels.find(n => n.name == "set-rank");
 	modChat = client.channels.find(n => n.name == "mod-chat");
