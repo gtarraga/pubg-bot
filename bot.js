@@ -37,12 +37,12 @@ var mainChannel,
 	Frole5k,
 	Frole10k,
 	Frole25k,
-	Frole50k;
-
-var setupEnabled = false;
+	Frole50k,
+	setupEnabled = false;
 
 
 client.on('ready', () => {
+	client.user.setName('Budget Oddish');
 	console.log(`Logged in as ${client.user.tag}!`);
 	mainChannel = client.channels.find(n => n.name == "set-rank");
 	modChat = client.channels.find(n => n.name == "mod-chat");
