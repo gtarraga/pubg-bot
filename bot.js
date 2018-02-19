@@ -10,22 +10,27 @@ var request = require('request'),
 client.login(tokens.key);
 
 var mainChannel,
+	modChat,
+	statsChat,
 	Trole1,
 	Trole10,
+	Trole25,
 	Trole50,
 	Trole100,
+	Trole250,
 	Trole500,
 	Trole1k,
 	Trole2k,
 	Trole5k,
 	Trole10k,
 	Trole25k,
-	Trole50k;
-
-var Frole1,
+	Trole50k,
+ 	Frole1,
 	Frole10,
+	Frole25,
 	Frole50,
 	Frole100,
+	Frole250,
 	Frole500,
 	Frole1k,
 	Frole2k,
@@ -40,30 +45,36 @@ var setupEnabled = false;
 client.on('ready', () => {
 	console.log(`Logged in as ${client.user.tag}!`);
 	mainChannel = client.channels.find(n => n.name == "set-rank");
+	modChat = client.channels.find(n => n.name == "mod-chat");
+	statsChat = client.channels.find(n => n.name == "stats-check");
 	mainGuild = client.guilds.first();
 	Trole1 = mainGuild.roles.find("name", "TPP Top 1");
 	Trole10 = mainGuild.roles.find("name", "TPP Top 10");
+	Trole10 = mainGuild.roles.find("name", "TPP Top 25");
 	Trole50 = mainGuild.roles.find("name", "TPP Top 50");
 	Trole100 = mainGuild.roles.find("name", "TPP Top 100");
+	Trole100 = mainGuild.roles.find("name", "TPP Top 250");
 	Trole500 = mainGuild.roles.find("name", "TPP Top 500");
 	Trole1k = mainGuild.roles.find("name", "TPP Top 1000");
 	Trole2k = mainGuild.roles.find("name", "TPP Top 2000");
 	Trole5k = mainGuild.roles.find("name", "TPP Top 5000");
-	Trole10k = mainGuild.roles.find("name", "TPP Top 10000");
-	Trole25k = mainGuild.roles.find("name", "TPP Top 25000");
-	Trole50k = mainGuild.roles.find("name", "TPP Top 50000");
+	Trole10k = mainGuild.roles.find("name", "TPP Top 10k");
+	Trole25k = mainGuild.roles.find("name", "TPP Top 25k");
+	Trole50k = mainGuild.roles.find("name", "TPP Top 50k");
 
 	Frole1 = mainGuild.roles.find("name", "FPP Top 1");
 	Frole10 = mainGuild.roles.find("name", "FPP Top 10");
+	Frole10 = mainGuild.roles.find("name", "FPP Top 25");
 	Frole50 = mainGuild.roles.find("name", "FPP Top 50");
 	Frole100 = mainGuild.roles.find("name", "FPP Top 100");
+	Frole100 = mainGuild.roles.find("name", "FPP Top 250");
 	Frole500 = mainGuild.roles.find("name", "FPP Top 500");
 	Frole1k = mainGuild.roles.find("name", "FPP Top 1000");
 	Frole2k = mainGuild.roles.find("name", "FPP Top 2000");
 	Frole5k = mainGuild.roles.find("name", "FPP Top 5000");
-	Frole10k = mainGuild.roles.find("name", "FPP Top 10000");
-	Frole25k = mainGuild.roles.find("name", "FPP Top 25000");
-	Frole50k = mainGuild.roles.find("name", "FPP Top 50000");
+	Frole10k = mainGuild.roles.find("name", "FPP Top 10k");
+	Frole25k = mainGuild.roles.find("name", "FPP Top 25k");
+	Frole50k = mainGuild.roles.find("name", "FPP Top 50k");
 
 	if(mainChannel == undefined) {
 		setupEnabled = true;
@@ -87,6 +98,7 @@ client.on('message', msg => {
 
 	//Sets up all roles and the command channel
 	if((command === 'setup') && setupEnabled) {
+
 		msg.guild.createRole({
 			name: 'TPP Top 1',
 			color: '#42e2f4',
@@ -188,7 +200,7 @@ client.on('message', msg => {
 			.catch(console.error());
 
 		msg.guild.createRole({
-			name: 'TTP Top 100',
+			name: 'FPP Top 100',
 			color: '#42e2f4',
 		})
 			.then(channel => console.log('Created new role FPP Top 100'))
@@ -252,47 +264,100 @@ client.on('message', msg => {
 				console.log('Created new channel pug-test');
 			})
 			.catch(console.error());
+
 	}
 
+
+	//!add Miisc fpp squad, defaults to fpp and squad if left empty
 	if(msg.channel == mainChannel) {
 
-		//Deletes anything that doesn't start with a prefix and logs the others
 		if (!msg.content.startsWith(prefix)) return msg.delete();
-		else console.log('\n\nContent:\n' + msg.content + '\n');
+		else {
+			console.log('\n\nContent:\n' + msg.content + '\n');
+		}
 
-		//!add Miisc fpp squad, defaults to fpp and squad if left empty
-		if (command === 'add') {
+
+		if (command === 'add' && args.length == 3) {
 			var username = args[0];
 			var mode = args[1];
 			var queue;
 
 			switch (args[2]) {
 				case 'solo':
-					queue = 1;
-					break;
+				queue = 1;
+				break;
 				case 'duo':
-					queue = 2;
-					break;
+				queue = 2;
+				break;
+				case 'duo':
+				queue = 2;
+				break;
+				case 'squad':
+				queue = 3;
+				break;
 				default:
-					queue = 3;
+				return;
 			}
-			scrape(username, mode, queue, msg.member);
+
+			var channel = msg.channel;
+
+			scrape(username, mode, queue, channel, msg);
 		}
 		msg.delete();
+	}
+
+
+	if(msg.channel == statsChat) {
+
+		if (!msg.content.startsWith(prefix)) return;
+		else {
+			console.log('\n\nContent:\n' + msg.content + '\n');
+		}
+
+
+		if (command === 'stats' && args.length == 3) {
+			var username = args[0];
+			var mode = args[1];
+			var queue;
+
+			switch (args[2]) {
+				case 'solo':
+				queue = 1;
+				break;
+				case 'duo':
+				queue = 2;
+				break;
+				case 'duo':
+				queue = 2;
+				break;
+				case 'squad':
+				queue = 3;
+				break;
+				default:
+				return;
+			}
+
+			var channel = msg.channel;
+
+			stats(username, mode, queue, channel, args[2]);
+		}
 	}
 });
 
 
-function scrape(username, mode, queue, member) {
+function scrape(username, mode, queue, channel, msg) {
+
+	var member = msg.member;
 
 	switch (mode) {
 		case 'tpp':
-			mode = 'tpp';
 			var child = 1;
 			break;
-		default:
-			mode = 'fpp';
+		case 'fpp':
 			var child = 5;
+			break;
+		default:
+			return;
 	}
 
 	var Nightmare1 = require('nightmare');
@@ -304,7 +369,7 @@ function scrape(username, mode, queue, member) {
 		nightmare
 		.goto('https://pubg.op.gg/user/' + username)
 		.click('#rankedStatsChkMode')
-		.wait('#rankedStatsWrap > div.ranked-stats-wrapper__list > div:nth-child(' + child + ') > div > div:nth-child('+ queue +') > div > div > div.ranked-stats')
+		.wait('#rankedStatsWrap > div.ranked-stats-wrapper__list > div:nth-child(' + child + ') > div > div:nth-child(' + queue + ') > div > div > div.ranked-stats')
 		.evaluate(function() {
 			return document.querySelector('body')
 			.innerHTML;
@@ -321,11 +386,11 @@ function scrape(username, mode, queue, member) {
 
 				rank = parseInt(rank);
 
-			// if(child == 5) {
-				if(rank == 1) member.addRole(Frole1);
-				else if(rank <= 10) member.addRole(Frole10);
-				else if(rank <= 50) member.addRole(Frole50);
-				else if(rank <= 100) member.addRole(Frole100);
+				if(rank <= 250) modChat.send(msg.member.toString() + ' is requesting rank ' + rank + ' with this username: **' + username + '**');
+
+			if(mode == 'fpp') {
+
+				if(rank <= 250) return;
 				else if(rank <= 500) member.addRole(Frole500);
 				else if(rank <= 1000) member.addRole(Frole1k);
 				else if(rank <= 2000) member.addRole(Frole2k);
@@ -334,21 +399,78 @@ function scrape(username, mode, queue, member) {
 				else if(rank <= 25000) member.addRole(Frole25k);
 				else if(rank <= 50000) member.addRole(Frole50k);
 				else console.log('git gud');
-			// }
-			// if(child == 1) {
-			// 	if(rank == 1) member.addRole(Trole1);
-			// 	else if(rank <= 10) member.addRole(Trole10);
-			// 	else if(rank <= 50) member.addRole(Trole50);
-			// 	else if(rank <= 100) member.addRole(Trole100);
-			// 	else if(rank <= 500) member.addRole(Trole500);
-			// 	else if(rank <= 1000) member.addRole(Trole1k);
-			// 	else if(rank <= 2000) member.addRole(Trole2k);
-			// 	else if(rank <= 5000) member.addRole(Trole5k);
-			// 	else if(rank <= 10000) member.addRole(Trole10k);
-			// 	else if(rank <= 25000) member.addRole(Trole25k);
-			// 	else if(rank <= 50000) member.addRole(Trole50k);
-			// 	else console.log('git gud');
-			// }
+			}
+			if(mode == 'tpp') {
+
+				if(rank <= 250) return;
+				else if(rank <= 500) member.addRole(Trole500);
+				else if(rank <= 1000) member.addRole(Trole1k);
+				else if(rank <= 2000) member.addRole(Trole2k);
+				else if(rank <= 5000) member.addRole(Trole5k);
+				else if(rank <= 10000) member.addRole(Trole10k);
+				else if(rank <= 25000) member.addRole(Trole25k);
+				else if(rank <= 50000) member.addRole(Trole50k);
+				else console.log('git gud');
+			}
+
+
+			});
+	})
+}
+
+function stats(username, mode, queue, channel, type) {
+
+	switch (mode) {
+		case 'tpp':
+			var child = 1;
+			break;
+		case 'fpp':
+			var child = 5;
+			break;
+		default:
+			return;
+	}
+
+	var Nightmare1 = require('nightmare');
+		nightmare = Nightmare1({
+			show: false,
+			waitTimeout: 6000 // in ms
+		});
+
+		nightmare
+		.goto('https://pubg.op.gg/user/' + username)
+		.click('#rankedStatsChkMode')
+		.wait('#rankedStatsWrap > div.ranked-stats-wrapper__list > div:nth-child(' + child + ') > div > div:nth-child(' + queue + ') > div > div > div.ranked-stats')
+		.evaluate(function() {
+			return document.querySelector('body')
+			.innerHTML;
+		})
+		.end()
+		.then(function(page) {
+			fs.writeFile('page.html', page, function(err) {
+				if (err) return console.log(err);
+
+				var $ = cheerio.load(fs.readFileSync('./page.html'));
+				rank = $('#rankedStatsWrap > div.ranked-stats-wrapper__list > div:nth-child(' + child + ') > div > div:nth-child(' + queue + ') > div > div > div > div > div.ranked-stats__layout.ranked-stats__layout--rank > div > div > div.ranked-stats__rank').text().replace(/,/g, '').replace(/#/g, '');
+
+				var adr = $('#rankedStatsWrap > div.ranked-stats-wrapper__list > div:nth-child(' + child + ') > div > div:nth-child(' + queue + ') > div > div > div > ul > li:nth-child(2) > div.ranked-stats__value.ranked-stats__value--imp').text();
+
+				var wr = $('#rankedStatsWrap > div.ranked-stats-wrapper__list > div:nth-child(' + child +') > div > div:nth-child(' + queue + ') > div > div > div > ul > li:nth-child(3) > div.ranked-stats__value').text().trim();
+
+				var kd = $('#rankedStatsWrap > div.ranked-stats-wrapper__list > div:nth-child(' + child + ') > div > div:nth-child(' + queue + ') > div > div > div > ul > li:nth-child(1) > div.ranked-stats__value.ranked-stats__value--imp.ranked-stats__value--great').text();
+
+				console.log(username + ' ' + mode + ' ' + queue + ' rank ' + rank);
+
+				rank = parseInt(rank);
+
+			if(mode == 'fpp') {
+
+				return statsChat.send('**Username:  **' + username + '\n\n**FPP ' + type + ' rank:  **#' + rank + '\n**Win Rate:  **' + wr + '\n**K/D:  **' + kd +'\n**ADR:  **' + adr);
+			}
+			if(mode == 'tpp') {
+
+			return statsChat.send('**Username:  **' + username + '\n\n**TPP ' + type + ' rank:  **#' + rank + '\n**Win Rate:  **' + wr + '\n**K/D:  **' + kd +'\n**ADR:  **' + adr);
+			}
 
 
 			});
