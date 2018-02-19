@@ -307,12 +307,12 @@ function scrape(username, mode, queue, channel, member) {
 
 	var Nightmare1 = require('nightmare');
 		nightmare = Nightmare1({
-			show: true,
-			waitTimeout: 3000 // in ms
+			show: false,
+			waitTimeout: 6000 // in ms
 		});
 
 		nightmare
-		.goto('htpps://pubg.op.gg/user/' + username)
+		.goto('https://pubg.op.gg/user/' + username)
 		.click('#rankedStatsChkMode')
 		.wait('#rankedStatsWrap > div.ranked-stats-wrapper__list > div:nth-child(' + child + ') > div > div:nth-child('+ queue +') > div > div > div.ranked-stats')
 		.evaluate(function() {
@@ -332,8 +332,8 @@ function scrape(username, mode, queue, channel, member) {
 
 				rank = parseInt(rank);
 
-			if(mode == 'fpp') {
-				if(rank = 1) member.addRole(Frole1);
+			// if(child == 5) {
+				if(rank == 1) member.addRole(Frole1);
 				else if(rank <= 10) member.addRole(Frole10);
 				else if(rank <= 50) member.addRole(Frole50);
 				else if(rank <= 100) member.addRole(Frole100);
@@ -345,21 +345,21 @@ function scrape(username, mode, queue, channel, member) {
 				else if(rank <= 25000) member.addRole(Frole25k);
 				else if(rank <= 50000) member.addRole(Frole50k);
 				else console.log('git gud');
-			}
-			if(mode == 'tpp') {
-				if(rank = 1) member.addRole(Trole1);
-				else if(rank <= 10) member.addRole(Trole10);
-				else if(rank <= 50) member.addRole(Trole50);
-				else if(rank <= 100) member.addRole(Trole100);
-				else if(rank <= 500) member.addRole(Trole500);
-				else if(rank <= 1000) member.addRole(Trole1k);
-				else if(rank <= 2000) member.addRole(Trole2k);
-				else if(rank <= 5000) member.addRole(Trole5k);
-				else if(rank <= 10000) member.addRole(Trole10k);
-				else if(rank <= 25000) member.addRole(Trole25k);
-				else if(rank <= 50000) member.addRole(Trole50k);
-				else console.log('git gud');
-			}
+			// }
+			// if(child == 1) {
+			// 	if(rank == 1) member.addRole(Trole1);
+			// 	else if(rank <= 10) member.addRole(Trole10);
+			// 	else if(rank <= 50) member.addRole(Trole50);
+			// 	else if(rank <= 100) member.addRole(Trole100);
+			// 	else if(rank <= 500) member.addRole(Trole500);
+			// 	else if(rank <= 1000) member.addRole(Trole1k);
+			// 	else if(rank <= 2000) member.addRole(Trole2k);
+			// 	else if(rank <= 5000) member.addRole(Trole5k);
+			// 	else if(rank <= 10000) member.addRole(Trole10k);
+			// 	else if(rank <= 25000) member.addRole(Trole25k);
+			// 	else if(rank <= 50000) member.addRole(Trole50k);
+			// 	else console.log('git gud');
+			// }
 
 
 			});
