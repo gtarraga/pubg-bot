@@ -42,12 +42,12 @@ var mainChannel,
 
 
 client.on('ready', () => {
-	client.user.setUsername('Budget Oddish');
+	client.user.setUsername('JoungBot');
 	console.log(`Logged in as ${client.user.tag}!`);
 	mainChannel = client.channels.find(n => n.name == "set-rank");
 	modChat = client.channels.find(n => n.name == "mod-chat");
 	statsChat = client.channels.find(n => n.name == "stats-check");
-	mainGuild = client.guilds.first();
+	mainGuild = client.guilds.find(guild => guild.id == '370577356567609344');
 	Trole1 = mainGuild.roles.find("name", "TPP Top 1");
 	Trole10 = mainGuild.roles.find("name", "TPP Top 10");
 	Trole10 = mainGuild.roles.find("name", "TPP Top 25");
@@ -269,7 +269,7 @@ client.on('message', msg => {
 
 
 	//!add Miisc fpp squad, defaults to fpp and squad if left empty
-	if(msg.channel == mainChannel) {
+	if(msg.channel.id == '415278638016233522' || msg.channel.id == '414935969985200149' ) {
 
 		if (!msg.content.startsWith(prefix)) return msg.delete();
 		else {
@@ -307,7 +307,7 @@ client.on('message', msg => {
 	}
 
 
-	if(msg.channel == statsChat) {
+	if(msg.channel.id == '415278730534060033' || msg.channel.id == '414967014013140993') {
 
 		if (!msg.content.startsWith(prefix)) return;
 		else {
@@ -386,7 +386,18 @@ function scrape(username, mode, queue, channel, msg) {
 
 				rank = parseInt(rank);
 
-				if(rank <= 250) modChat.send(msg.member.toString() + ' is requesting rank ' + rank + ' with this username: **' + username + '**');
+				if(rank <= 250) {
+					if(msg.guild.id == '370577356567609344') {
+
+						modChat = client.channels.find(n => n.id == '371368862014373888');
+						modChat.send(msg.member.toString() + ' is requesting rank ' + rank + ' with this username: **' + username + '**');
+					}
+					if(msg.guild.id == '364233631549489152') {
+
+						modChat = client.channels.find(n => n.id == '414955180610682880');
+						modChat.send(msg.member.toString() + ' is requesting rank ' + rank + ' with this username: **' + username + '**');
+					}
+				}
 
 			if(mode == 'fpp') {
 
@@ -457,26 +468,25 @@ function stats(username, mode, queue, channel, type) {
 
 				var wr = $('#rankedStatsWrap > div.ranked-stats-wrapper__list > div:nth-child(' + child +') > div > div:nth-child(' + queue + ') > div > div > div > ul > li:nth-child(3) > div.ranked-stats__value').text().trim();
 
-				var kd = $('#rankedStatsWrap > div.ranked-stats-wrapper__list > div:nth-child(' + child + ') > div > div:nth-child(' + queue + ') > div > div > div > ul > li:nth-child(1) > div.ranked-stats__value.ranked-stats__value--imp.ranked-stats__value--great').text();
+				var kd = $('#rankedStatsWrap > div.ranked-stats-wrapper__list > div:nth-child(' + child + ') > div > div:nth-child(' + queue + ') > div > div > div > ul > li:nth-child(1) > div').text().replace(/K/g, '').replace(/\//g, '').replace(/D/g, '');
+
 
 				console.log(username + ' ' + mode + ' ' + queue + ' rank ' + rank);
 
 				rank = parseInt(rank);
 
-			if(mode == 'fpp') {
+				if(mode == 'fpp') {
 
-				if(username == 'wawasbootcamp') return statsChat.send('**Username:  **' + username + '\n\n**FPP ' + type + ' rank:  **#' + rank + '\n**Win Rate:  **' + wr + '\n**K/D:  **' + kd +'\n**ADR:  **' + adr + "\n\n**IT'S GIF NOT JIF**");
+					if(username == 'wawasbootcamp') return channel.send('**Username:  **' + username + '\n\n**FPP ' + type + ' rank:  **#' + rank + '\n**Win Rate:  **' + wr + '\n**K/D:  **' + kd +'\n**ADR:  **' + adr + "\n\n**IT'S GIF NOT JIF**");
 
-				return statsChat.send('**Username:  **' + username + '\n\n**FPP ' + type + ' rank:  **#' + rank + '\n**Win Rate:  **' + wr + '\n**K/D:  **' + kd +'\n**ADR:  **' + adr);
-			}
-			if(mode == 'tpp') {
+					return channel.send('**Username:  **' + username + '\n\n**FPP ' + type + ' rank:  **#' + rank + '\n**Win Rate:  **' + wr + '\n**K/D:  **' + kd +'\n**ADR:  **' + adr);
+				}
+				if(mode == 'tpp') {
 
-				if(username == 'wawasbootcamp') return statsChat.send('**Username:  **' + username + '\n\n**TPP ' + type + ' rank:  **#' + rank + '\n**Win Rate:  **' + wr + '\n**K/D:  **' + kd +'\n**ADR:  **' + adr + "\n\n**IT'S GIF NOT JIF**");
+					if(username == 'wawasbootcamp') return channel.send('**Username:  **' + username + '\n\n**TPP ' + type + ' rank:  **#' + rank + '\n**Win Rate:  **' + wr + '\n**K/D:  **' + kd +'\n**ADR:  **' + adr + "\n\n**IT'S GIF NOT JIF**");
 
-				return statsChat.send('**Username:  **' + username + '\n\n**TPP ' + type + ' rank:  **#' + rank + '\n**Win Rate:  **' + wr + '\n**K/D:  **' + kd +'\n**ADR:  **' + adr);
-			}
-
-
+					return channel.send('**Username:  **' + username + '\n\n**TPP ' + type + ' rank:  **#' + rank + '\n**Win Rate:  **' + wr + '\n**K/D:  **' + kd +'\n**ADR:  **' + adr);
+				}
 			});
 	})
 }
