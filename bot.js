@@ -380,7 +380,7 @@ function scrape(username, mode, queue, channel, msg) {
 				if (err) return console.log(err);
 
 				var $ = cheerio.load(fs.readFileSync('./page.html'));
-				rank = $('#rankedStatsWrap > div.ranked-stats-wrapper__list > div:nth-child(5) > div > div:nth-child(' + queue + ') > div > div > div > div > div.ranked-stats__layout.ranked-stats__layout--rank > div > div > div.ranked-stats__rank').text().replace(/,/g, '').replace(/#/g, '');
+				rank = $('#rankedStatsWrap > div.ranked-stats-wrapper__list > div:nth-child(' + child + ') > div > div:nth-child(' + queue + ') > div > div > div > div > div.ranked-stats__layout.ranked-stats__layout--rank > div > div > div.ranked-stats__rank').text().replace(/,/g, '').replace(/#/g, '');
 
 				console.log(username + ' ' + mode + ' ' + queue + ' rank ' + rank);
 
