@@ -9,9 +9,7 @@ var request = require('request'),
 //Invite link test bot https://goo.gl/yLmkAG
 client.login(tokens.key);
 
-var mainChannel,
-	modChat,
-	statsChat,
+var modChat,
 	Trole1,
 	Trole10,
 	Trole25,
@@ -44,54 +42,53 @@ var mainChannel,
 client.on('ready', () => {
 	client.user.setUsername('JoungBot');
 	console.log(`Logged in as ${client.user.tag}!`);
-	mainChannel = client.channels.find(n => n.name == "set-rank");
-	modChat = client.channels.find(n => n.name == "mod-chat");
-	statsChat = client.channels.find(n => n.name == "stats-check");
-	mainGuild = client.guilds.find(guild => guild.id == '370577356567609344');
-	Trole1 = mainGuild.roles.find("name", "TPP Top 1");
-	Trole10 = mainGuild.roles.find("name", "TPP Top 10");
-	Trole10 = mainGuild.roles.find("name", "TPP Top 25");
-	Trole50 = mainGuild.roles.find("name", "TPP Top 50");
-	Trole100 = mainGuild.roles.find("name", "TPP Top 100");
-	Trole100 = mainGuild.roles.find("name", "TPP Top 250");
-	Trole500 = mainGuild.roles.find("name", "TPP Top 500");
-	Trole1k = mainGuild.roles.find("name", "TPP Top 1000");
-	Trole2k = mainGuild.roles.find("name", "TPP Top 2000");
-	Trole5k = mainGuild.roles.find("name", "TPP Top 5000");
-	Trole10k = mainGuild.roles.find("name", "TPP Top 10k");
-	Trole25k = mainGuild.roles.find("name", "TPP Top 25k");
-	Trole50k = mainGuild.roles.find("name", "TPP Top 50k");
 
-	Frole1 = mainGuild.roles.find("name", "FPP Top 1");
-	Frole10 = mainGuild.roles.find("name", "FPP Top 10");
-	Frole10 = mainGuild.roles.find("name", "FPP Top 25");
-	Frole50 = mainGuild.roles.find("name", "FPP Top 50");
-	Frole100 = mainGuild.roles.find("name", "FPP Top 100");
-	Frole100 = mainGuild.roles.find("name", "FPP Top 250");
-	Frole500 = mainGuild.roles.find("name", "FPP Top 500");
-	Frole1k = mainGuild.roles.find("name", "FPP Top 1000");
-	Frole2k = mainGuild.roles.find("name", "FPP Top 2000");
-	Frole5k = mainGuild.roles.find("name", "FPP Top 5000");
-	Frole10k = mainGuild.roles.find("name", "FPP Top 10k");
-	Frole25k = mainGuild.roles.find("name", "FPP Top 25k");
-	Frole50k = mainGuild.roles.find("name", "FPP Top 50k");
-
-	if(mainChannel == undefined) {
-		setupEnabled = true;
-		console.log('command channel needs setup');
-	}
-	if(Trole1 == undefined) {
-		setupEnabled = true;
-		console.log('roles needs setup');
-	}
-
-	if(!setupEnabled) console.log('already setup');
+	// if(mainChannel == undefined) {
+	// 	setupEnabled = true;
+	// 	console.log('command channel needs setup');
+	// }
+	// if(Trole1 == undefined) {
+	// 	setupEnabled = true;
+	// 	console.log('roles needs setup');
+	// }
+	//
+	// if(!setupEnabled) console.log('already setup');
 });
 
 const prefix = "!";
 var rank;
 
 client.on('message', msg => {
+
+	Trole1 = msg.guild.roles.find("name", "TPP Top 1");
+	Trole10 = msg.guild.roles.find("name", "TPP Top 10");
+	Trole10 = msg.guild.roles.find("name", "TPP Top 25");
+	Trole50 = msg.guild.roles.find("name", "TPP Top 50");
+	Trole100 = msg.guild.roles.find("name", "TPP Top 100");
+	Trole100 = msg.guild.roles.find("name", "TPP Top 250");
+	Trole500 = msg.guild.roles.find("name", "TPP Top 500");
+	Trole1k = msg.guild.roles.find("name", "TPP Top 1000");
+	Trole2k = msg.guild.roles.find("name", "TPP Top 2000");
+	Trole5k = msg.guild.roles.find("name", "TPP Top 5000");
+	Trole10k = msg.guild.roles.find("name", "TPP Top 10k");
+	Trole25k = msg.guild.roles.find("name", "TPP Top 25k");
+	Trole50k = msg.guild.roles.find("name", "TPP Top 50k");
+
+	Frole1 = msg.guild.roles.find("name", "FPP Top 1");
+	Frole10 = msg.guild.roles.find("name", "FPP Top 10");
+	Frole10 = msg.guild.roles.find("name", "FPP Top 25");
+	Frole50 = msg.guild.roles.find("name", "FPP Top 50");
+	Frole100 = msg.guild.roles.find("name", "FPP Top 100");
+	Frole100 = msg.guild.roles.find("name", "FPP Top 250");
+	Frole500 = msg.guild.roles.find("name", "FPP Top 500");
+	Frole1k = msg.guild.roles.find("name", "FPP Top 1000");
+	Frole2k = msg.guild.roles.find("name", "FPP Top 2000");
+	Frole5k = msg.guild.roles.find("name", "FPP Top 5000");
+	Frole10k = msg.guild.roles.find("name", "FPP Top 10k");
+	Frole25k = msg.guild.roles.find("name", "FPP Top 25k");
+	Frole50k = msg.guild.roles.find("name", "FPP Top 50k")
+
+
 
 	const args = msg.content.slice(prefix.length).trim().split(/ +/g);
 	const command = args.shift().toLowerCase();
