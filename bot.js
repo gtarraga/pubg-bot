@@ -494,13 +494,9 @@ function stats(username, mode, queue, channel, type) {
 
 				if(mode == 'fpp') {
 
-					if(username == 'wawasbootcamp') return channel.send('**Username:  **' + username + '\n\n**FPP ' + type + ' rank:  **#' + rank + '\n**Win Rate:  **' + wr + '\n**K/D:  **' + kd +'\n**ADR:  **' + adr + "\n\n**IT'S GIF NOT JIF**");
-
 					return channel.send('**Username:  **' + username + '\n\n**FPP ' + type + ' rank:  **#' + rank + '\n**Win Rate:  **' + wr + '\n**K/D:  **' + kd +'\n**ADR:  **' + adr);
 				}
 				if(mode == 'tpp') {
-
-					if(username == 'wawasbootcamp') return channel.send('**Username:  **' + username + '\n\n**TPP ' + type + ' rank:  **#' + rank + '\n**Win Rate:  **' + wr + '\n**K/D:  **' + kd +'\n**ADR:  **' + adr + "\n\n**IT'S GIF NOT JIF**");
 
 					return channel.send('**Username:  **' + username + '\n\n**TPP ' + type + ' rank:  **#' + rank + '\n**Win Rate:  **' + wr + '\n**K/D:  **' + kd +'\n**ADR:  **' + adr);
 				}
