@@ -281,19 +281,25 @@ client.on('message', msg => {
 
 			switch (args[2]) {
 				case 'solo':
-				queue = 1;
-				break;
+					queue = 1;
+					break;
+				case 'solos':
+					queue = 1;
+					break;
 				case 'duo':
-				queue = 2;
-				break;
-				case 'duo':
-				queue = 2;
-				break;
+					queue = 2;
+					break;
+				case 'duos':
+					queue = 2;
+					break;
 				case 'squad':
-				queue = 3;
-				break;
+					queue = 3;
+					break;
+				case 'squads':
+					queue = 3;
+					break;
 				default:
-				return;
+					return;
 			}
 
 			var channel = msg.channel;
@@ -319,19 +325,25 @@ client.on('message', msg => {
 
 			switch (args[2]) {
 				case 'solo':
-				queue = 1;
-				break;
+					queue = 1;
+					break;
+				case 'solos':
+					queue = 1;
+					break;
 				case 'duo':
-				queue = 2;
-				break;
-				case 'duo':
-				queue = 2;
-				break;
+					queue = 2;
+					break;
+				case 'duos':
+					queue = 2;
+					break;
 				case 'squad':
-				queue = 3;
-				break;
+					queue = 3;
+					break;
+				case 'squads':
+					queue = 3;
+					break;
 				default:
-				return;
+					return;
 			}
 
 			var channel = msg.channel;
@@ -351,7 +363,7 @@ function scrape(username, mode, queue, channel, msg) {
 			var child = 1;
 			break;
 		case 'fpp':
-			var child = 5;
+			var child = 6;
 			break;
 		default:
 			return;
@@ -362,6 +374,10 @@ function scrape(username, mode, queue, channel, msg) {
 			show: false,
 			waitTimeout: 6000 // in ms
 		});
+
+		nightmare.on('timeout', function(msg) {
+			return console.log('timedout');
+  		});
 
 		nightmare
 		.goto('https://pubg.op.gg/user/' + username)
@@ -387,12 +403,12 @@ function scrape(username, mode, queue, channel, msg) {
 					if(msg.guild.id == '370577356567609344') {
 
 						modChat = client.channels.find(n => n.id == '371368862014373888');
-						modChat.send(msg.member.toString() + ' is requesting rank ' + rank + ' with this username: **' + username + '**');
+						modChat.send(member.toString() + ' is requesting rank ' + rank + ' with this username: **' + username + '**');
 					}
 					if(msg.guild.id == '364233631549489152') {
 
 						modChat = client.channels.find(n => n.id == '414955180610682880');
-						modChat.send(msg.member.toString() + ' is requesting rank ' + rank + ' with this username: **' + username + '**');
+						modChat.send(member.toString() + ' is requesting rank ' + rank + ' with this username: **' + username + '**');
 					}
 				}
 
@@ -433,7 +449,7 @@ function stats(username, mode, queue, channel, type) {
 			var child = 1;
 			break;
 		case 'fpp':
-			var child = 5;
+			var child = 6;
 			break;
 		default:
 			return;
@@ -444,6 +460,10 @@ function stats(username, mode, queue, channel, type) {
 			show: false,
 			waitTimeout: 6000 // in ms
 		});
+
+		nightmare.on('timeout', function(msg) {
+			return console.log('timedout');
+  		});
 
 		nightmare
 		.goto('https://pubg.op.gg/user/' + username)
