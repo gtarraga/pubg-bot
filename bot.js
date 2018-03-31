@@ -1,6 +1,17 @@
 const Discord = require('discord.js');
 const tokens = require('./tokens');
 const client = new Discord.Client();
+const Fortnite = require('fortnite-api');
+
+let fortniteAPI = new Fortnite([
+    "gt.tarraga@gmail.com",
+    "GalaxyMoonTexas1",
+    "MzRhMDJjZjhmNDQxNGUyOWIxNTkyMTg3NmRhMzZmOWE6ZGFhZmJjY2M3Mzc3NDUwMzlkZmZlNTNkOTRmYzc2Y2Y=",
+    "ZWM2ODRiOGM2ODdmNDc5ZmFkZWEzY2IyYWQ4M2Y1YzY6ZTFmMzFjMjExZjI4NDEzMTg2MjYyZDM3YTEzZmM4NGQ="
+  ], {
+    debug: true
+  });
+
 
 var request = require('request'),
 	cheerio = require('cheerio'),
@@ -94,175 +105,175 @@ client.on('message', msg => {
 	const command = args.shift().toLowerCase();
 
 	//Sets up all roles and the command channel
-	if((command === 'setup') && setupEnabled) {
-
-		msg.guild.createRole({
-			name: 'TPP Top 1',
-			color: '#42e2f4',
-		})
-			.then(channel => console.log('Created new role TPP Top 1'))
-			.catch(console.error());
-
-		msg.guild.createRole({
-			name: 'TPP Top 10',
-			color: '#42e2f4',
-		})
-			.then(channel => console.log('Created new role TPP Top 10'))
-			.catch(console.error());
-
-		msg.guild.createRole({
-			name: 'TPP Top 50',
-			color: '#42e2f4',
-		})
-			.then(channel => console.log('Created new role TPP Top 50'))
-			.catch(console.error());
-
-		msg.guild.createRole({
-			name: 'TTP Top 100',
-			color: '#42e2f4',
-		})
-			.then(channel => console.log('Created new role TPP Top 100'))
-			.catch(console.error());
-
-		msg.guild.createRole({
-			name: 'TPP Top 500',
-			color: '#42e2f4',
-		})
-			.then(channel => console.log('Created new role TPP Top 500'))
-			.catch(console.error());
-
-		msg.guild.createRole({
-			name: 'TPP Top 1000',
-			color: '#42e2f4',
-		})
-			.then(channel => console.log('Created new role TPP Top 1k'))
-			.catch(console.error());
-
-		msg.guild.createRole({
-			name: 'TPP Top 2000',
-			color: '#42e2f4',
-		})
-			.then(channel => console.log('Created new role TPP Top 2k'))
-			.catch(console.error());
-
-		msg.guild.createRole({
-			name: 'TPP Top 5000',
-			color: '#42e2f4',
-		})
-			.then(channel => console.log('Created new role TPP Top 5k'))
-			.catch(console.error());
-
-		msg.guild.createRole({
-			name: 'TPP Top 10000',
-			color: '#42e2f4',
-		})
-			.then(channel => console.log('Created new role TPP Top 10k'))
-			.catch(console.error());
-
-		msg.guild.createRole({
-			name: 'TPP Top 25000',
-			color: '#42e2f4',
-		})
-			.then(channel => console.log('Created new role TPP Top 25k'))
-			.catch(console.error());
-
-		msg.guild.createRole({
-			name: 'TPP Top 50000',
-			color: '#42e2f4',
-		})
-			.then(channel => console.log('Created new role TPP Top 50k'))
-			.catch(console.error());
-
-
-
-		msg.guild.createRole({
-			name: 'FPP Top 1',
-			color: '#42e2f4',
-		})
-			.then(channel => console.log('Created new role FPP Top 1'))
-			.catch(console.error());
-
-		msg.guild.createRole({
-			name: 'FPP Top 10',
-			color: '#42e2f4',
-		})
-			.then(channel => console.log('Created new role FPP Top 10'))
-			.catch(console.error());
-
-		msg.guild.createRole({
-			name: 'FPP Top 50',
-			color: '#42e2f4',
-		})
-			.then(channel => console.log('Created new role FPP Top 50'))
-			.catch(console.error());
-
-		msg.guild.createRole({
-			name: 'FPP Top 100',
-			color: '#42e2f4',
-		})
-			.then(channel => console.log('Created new role FPP Top 100'))
-			.catch(console.error());
-
-		msg.guild.createRole({
-			name: 'FPP Top 500',
-			color: '#42e2f4',
-		})
-			.then(channel => console.log('Created new role FPP Top 500'))
-			.catch(console.error());
-
-		msg.guild.createRole({
-			name: 'FPP Top 1000',
-			color: '#42e2f4',
-		})
-			.then(channel => console.log('Created new role FPP Top 1k'))
-			.catch(console.error());
-
-		msg.guild.createRole({
-			name: 'FPP Top 2000',
-			color: '#42e2f4',
-		})
-			.then(channel => console.log('Created new role Top 2k'))
-			.catch(console.error());
-
-		msg.guild.createRole({
-			name: 'FPP Top 5000',
-			color: '#42e2f4',
-		})
-			.then(channel => console.log('Created new role FPP Top 5k'))
-			.catch(console.error());
-
-		msg.guild.createRole({
-			name: 'FPP Top 10000',
-			color: '#42e2f4',
-		})
-			.then(channel => console.log('Created new role FPP Top 10k'))
-			.catch(console.error());
-
-		msg.guild.createRole({
-			name: 'FPP Top 25000',
-			color: '#42e2f4',
-		})
-			.then(channel => console.log('Created new role FPP Top 25k'))
-			.catch(console.error());
-
-		msg.guild.createRole({
-			name: 'FPP Top 50000',
-			color: '#42e2f4',
-		})
-			.then(channel => console.log('Created new role FPP Top 50k'))
-			.catch(console.error());
-
-
-
-
-
-		msg.guild.createChannel('set-rank', 'text')
-			.then(channel => {
-				console.log('Created new channel pug-test');
-			})
-			.catch(console.error());
-
-	}
+	// if((command === 'setup') && setupEnabled) {
+	//
+	// 	msg.guild.createRole({
+	// 		name: 'TPP Top 1',
+	// 		color: '#42e2f4',
+	// 	})
+	// 		.then(channel => console.log('Created new role TPP Top 1'))
+	// 		.catch(console.error());
+	//
+	// 	msg.guild.createRole({
+	// 		name: 'TPP Top 10',
+	// 		color: '#42e2f4',
+	// 	})
+	// 		.then(channel => console.log('Created new role TPP Top 10'))
+	// 		.catch(console.error());
+	//
+	// 	msg.guild.createRole({
+	// 		name: 'TPP Top 50',
+	// 		color: '#42e2f4',
+	// 	})
+	// 		.then(channel => console.log('Created new role TPP Top 50'))
+	// 		.catch(console.error());
+	//
+	// 	msg.guild.createRole({
+	// 		name: 'TTP Top 100',
+	// 		color: '#42e2f4',
+	// 	})
+	// 		.then(channel => console.log('Created new role TPP Top 100'))
+	// 		.catch(console.error());
+	//
+	// 	msg.guild.createRole({
+	// 		name: 'TPP Top 500',
+	// 		color: '#42e2f4',
+	// 	})
+	// 		.then(channel => console.log('Created new role TPP Top 500'))
+	// 		.catch(console.error());
+	//
+	// 	msg.guild.createRole({
+	// 		name: 'TPP Top 1000',
+	// 		color: '#42e2f4',
+	// 	})
+	// 		.then(channel => console.log('Created new role TPP Top 1k'))
+	// 		.catch(console.error());
+	//
+	// 	msg.guild.createRole({
+	// 		name: 'TPP Top 2000',
+	// 		color: '#42e2f4',
+	// 	})
+	// 		.then(channel => console.log('Created new role TPP Top 2k'))
+	// 		.catch(console.error());
+	//
+	// 	msg.guild.createRole({
+	// 		name: 'TPP Top 5000',
+	// 		color: '#42e2f4',
+	// 	})
+	// 		.then(channel => console.log('Created new role TPP Top 5k'))
+	// 		.catch(console.error());
+	//
+	// 	msg.guild.createRole({
+	// 		name: 'TPP Top 10000',
+	// 		color: '#42e2f4',
+	// 	})
+	// 		.then(channel => console.log('Created new role TPP Top 10k'))
+	// 		.catch(console.error());
+	//
+	// 	msg.guild.createRole({
+	// 		name: 'TPP Top 25000',
+	// 		color: '#42e2f4',
+	// 	})
+	// 		.then(channel => console.log('Created new role TPP Top 25k'))
+	// 		.catch(console.error());
+	//
+	// 	msg.guild.createRole({
+	// 		name: 'TPP Top 50000',
+	// 		color: '#42e2f4',
+	// 	})
+	// 		.then(channel => console.log('Created new role TPP Top 50k'))
+	// 		.catch(console.error());
+	//
+	//
+	//
+	// 	msg.guild.createRole({
+	// 		name: 'FPP Top 1',
+	// 		color: '#42e2f4',
+	// 	})
+	// 		.then(channel => console.log('Created new role FPP Top 1'))
+	// 		.catch(console.error());
+	//
+	// 	msg.guild.createRole({
+	// 		name: 'FPP Top 10',
+	// 		color: '#42e2f4',
+	// 	})
+	// 		.then(channel => console.log('Created new role FPP Top 10'))
+	// 		.catch(console.error());
+	//
+	// 	msg.guild.createRole({
+	// 		name: 'FPP Top 50',
+	// 		color: '#42e2f4',
+	// 	})
+	// 		.then(channel => console.log('Created new role FPP Top 50'))
+	// 		.catch(console.error());
+	//
+	// 	msg.guild.createRole({
+	// 		name: 'FPP Top 100',
+	// 		color: '#42e2f4',
+	// 	})
+	// 		.then(channel => console.log('Created new role FPP Top 100'))
+	// 		.catch(console.error());
+	//
+	// 	msg.guild.createRole({
+	// 		name: 'FPP Top 500',
+	// 		color: '#42e2f4',
+	// 	})
+	// 		.then(channel => console.log('Created new role FPP Top 500'))
+	// 		.catch(console.error());
+	//
+	// 	msg.guild.createRole({
+	// 		name: 'FPP Top 1000',
+	// 		color: '#42e2f4',
+	// 	})
+	// 		.then(channel => console.log('Created new role FPP Top 1k'))
+	// 		.catch(console.error());
+	//
+	// 	msg.guild.createRole({
+	// 		name: 'FPP Top 2000',
+	// 		color: '#42e2f4',
+	// 	})
+	// 		.then(channel => console.log('Created new role Top 2k'))
+	// 		.catch(console.error());
+	//
+	// 	msg.guild.createRole({
+	// 		name: 'FPP Top 5000',
+	// 		color: '#42e2f4',
+	// 	})
+	// 		.then(channel => console.log('Created new role FPP Top 5k'))
+	// 		.catch(console.error());
+	//
+	// 	msg.guild.createRole({
+	// 		name: 'FPP Top 10000',
+	// 		color: '#42e2f4',
+	// 	})
+	// 		.then(channel => console.log('Created new role FPP Top 10k'))
+	// 		.catch(console.error());
+	//
+	// 	msg.guild.createRole({
+	// 		name: 'FPP Top 25000',
+	// 		color: '#42e2f4',
+	// 	})
+	// 		.then(channel => console.log('Created new role FPP Top 25k'))
+	// 		.catch(console.error());
+	//
+	// 	msg.guild.createRole({
+	// 		name: 'FPP Top 50000',
+	// 		color: '#42e2f4',
+	// 	})
+	// 		.then(channel => console.log('Created new role FPP Top 50k'))
+	// 		.catch(console.error());
+	//
+	//
+	//
+	//
+	//
+	// 	msg.guild.createChannel('set-rank', 'text')
+	// 		.then(channel => {
+	// 			console.log('Created new channel pug-test');
+	// 		})
+	// 		.catch(console.error());
+	//
+	// }
 
 
 	//!add Miisc fpp squad, defaults to fpp and squad if left empty
@@ -351,6 +362,49 @@ client.on('message', msg => {
 			stats(username, mode, queue, channel, args[2]);
 		}
 	}
+
+
+	if(msg.channel.id == '424019229965025310' || msg.channel.id == '334468839876329484') {
+
+		if (!msg.content.startsWith(prefix)) return;
+		else {
+			console.log('\n\nFortnite\nContent:\n' + msg.content + '\n');
+		}
+
+
+		if (command === 'stats' && args.length == 3) {
+			var username = args[0];
+			var platform = args[1];
+			var queue = args[2];
+
+			switch (args[2]) {
+				case 'solo':
+					queue = 'solo';
+					break;
+				case 'solos':
+					queue = 'solo';
+					break;
+				case 'duo':
+					queue = 'duo';
+					break;
+				case 'duos':
+					queue = 'duo';
+					break;
+				case 'squad':
+					queue = 'squad';
+					break;
+				case 'squads':
+					queue = 'squad';
+					break;
+				default:
+					return;
+			}
+
+			var channel = msg.channel;
+
+			statsFortnite(username, queue, channel);
+		}
+	}
 });
 
 
@@ -363,7 +417,7 @@ function scrape(username, mode, queue, channel, msg) {
 			var child = 1;
 			break;
 		case 'fpp':
-			var child = 6;
+			var child = 7;
 			break;
 		default:
 			return;
@@ -449,7 +503,7 @@ function stats(username, mode, queue, channel, type) {
 			var child = 1;
 			break;
 		case 'fpp':
-			var child = 6;
+			var child = 7;
 			break;
 		default:
 			return;
@@ -493,7 +547,6 @@ function stats(username, mode, queue, channel, type) {
 				rank = parseInt(rank);
 
 				if(mode == 'fpp') {
-
 					return channel.send('**Username:  **' + username + '\n\n**FPP ' + type + ' rank:  **#' + rank + '\n**Win Rate:  **' + wr + '\n**K/D:  **' + kd +'\n**ADR:  **' + adr);
 				}
 				if(mode == 'tpp') {
@@ -502,4 +555,34 @@ function stats(username, mode, queue, channel, type) {
 				}
 			});
 	})
+}
+
+function statsFortnite(username, platform, queue, channel) {
+
+	var playerStats;
+
+	fortniteAPI.login()
+	.then(()=> {
+		fortniteAPI.getStatsBR(username, platform)
+  		.then((stats) => {
+			console.log(queue);
+
+			if(queue == 'solo'){
+				playerStats = stats.group.solo;
+			}
+			else if(queue == 'duo'){
+				playerStats = stats.group.duo;
+			}
+			else{
+				playerStats = stats.group.squad;
+			}
+
+			console.log(playerStats);
+
+			return channel.send("**Username:  **" + stats.info.username + "\n\n**Win Rate:  **" + playerStats['win%'] + "%\n**K/D:  **" + playerStats['k/d'] +"\n**Kills per minute:  **" + playerStats.killsPerMin);
+  		})
+		.catch((err) => {
+    		console.log(err);
+  		});
+	});
 }
