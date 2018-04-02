@@ -400,9 +400,20 @@ client.on('message', msg => {
 					return;
 			}
 
+			switch (args[1]) {
+				case 'xb1':
+					platform = "xb1";
+					break;
+				case 'ps4':
+					platform = "pc";
+					break;
+				default:
+					platform = "pc";
+			}
+
 			var channel = msg.channel;
 
-			statsFortnite(username, queue, channel);
+			statsFortnite(username, platform, queue, channel);
 		}
 	}
 });
@@ -579,7 +590,7 @@ function statsFortnite(username, platform, queue, channel) {
 
 			console.log(playerStats);
 
-			return channel.send("**Username:  **" + stats.info.username + "\n\n**Win Rate:  **" + playerStats['win%'] + "%\n**K/D:  **" + playerStats['k/d'] +"\n**Kills per minute:  **" + playerStats.killsPerMin);
+			return channel.send("**Username:  **" + stats.info.username + "\n\n**Win Rate:  **" + playerStats['win%'] + "%\n**K/D:  **" + playerStats['k/d'] + "\n**Kills per match:  **" + playerStats.killsPerMatch + "\n**Kills per minute:  **" + playerStats.killsPerMin);
   		})
 		.catch((err) => {
     		console.log(err);
